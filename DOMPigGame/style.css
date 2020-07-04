@@ -16,6 +16,9 @@
 }
 
 
+/* #dice-1 { top:20px };  */
+/*#dice-2 {top:250px};  */
+
 * {
     margin: 0;
     padding: 0;
@@ -167,10 +170,5 @@ i {
 .winner { background-color: #f7f7f7; }
 .winner .player-name { font-weight: 300; color: #EB4D4D; }
 
-/* This had to be added at the end of the file. I was being overwritten earlier */
-#dice-1 {
-    top:20px;
-} 
-#dice-2 {
-    top:250px;
-}
+#dice-1 { top:100px };
+#dice-2 {top:300px}; 
