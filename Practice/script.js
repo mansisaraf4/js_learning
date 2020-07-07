@@ -91,17 +91,76 @@ function ingredientsRequired(dish){
 
 ingredientsRequired("Roti")("Mansi");*/
 
+/*
+//IIFE - hide a variabe from outside
+//Immediately invoked function expression
+//
+
+(function () {
+    var score = Math.random()*10;
+    console.log(score>=5);
+})(); //calling the anonymous fucntion
+
+//if we call score here it will not work
+// console.log(score);
+
+(function (goodluck) {
+    var score = Math.random()*10;
+    console.log(score>=5-goodluck);
+})(5);
+
+//IIFE can be only created once
+//Obtain data privacy like we did for score here
+*/
 
 
+/************Closures********** */
+
+function retirement(retirementAge){
+    var a = ' years  left until retirement';
+    return function(yearOfBirth){
+        var age = 2020-yearOfBirth;
+        console.log((retirementAge-age) + a);
+    }
+}
+
+retirementIndia = retirement(60);
+retirementIndia(1995);
+
+//The process of retirement India using the variables retirementAge and a even after it has stopped is closure
+
+// 
+
+///Please check why this does not work////
+
+function ingredientsRequired(dish){
+    var s = ",to make "+dish+" you will need ";
+    return function(name){
+        switch (dish){
+            case "Momos": 
+                // return function(name){
+                console.log("Hi!"+name+ s+"maida, cabbage and carrot");
+                // }
+    
+            case "Roti":
+                // return function(name){
+                    console.log("Hi!"+name+s+" wheat flour, water and a pinch of salt.");
+                // }
+    
+            default:
+                // return function(name){
+                    console.log ("Which dish ingredients would you like to know,"+name+" ?");
+                // }
+    
+        } 
+    }
+
+}
+
+ingredientsRequired("Momos")("Mansi");
 
 
-
-
-
-
-
-
-
+/////////////////
 
 
 
