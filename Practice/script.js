@@ -113,9 +113,8 @@ ingredientsRequired("Roti")("Mansi");*/
 //Obtain data privacy like we did for score here
 */
 
-
-/************Closures********** */
-
+//Closures
+/*
 function retirement(retirementAge){
     var a = ' years  left until retirement';
     return function(yearOfBirth){
@@ -131,7 +130,6 @@ retirementIndia(1995);
 
 // 
 
-///Please check why this does not work////
 
 function ingredientsRequired(dish){
     var s = ",to make "+dish+" you will need ";
@@ -140,16 +138,19 @@ function ingredientsRequired(dish){
             case "Momos": 
                 // return function(name){
                 console.log("Hi!"+name+ s+"maida, cabbage and carrot");
+                break;
                 // }
     
             case "Roti":
                 // return function(name){
                     console.log("Hi!"+name+s+" wheat flour, water and a pinch of salt.");
+                    break;
                 // }
     
             default:
                 // return function(name){
                     console.log ("Which dish ingredients would you like to know,"+name+" ?");
+                    break;
                 // }
     
         } 
@@ -159,16 +160,52 @@ function ingredientsRequired(dish){
 
 ingredientsRequired("Momos")("Mansi");
 
-
+*/
 /////////////////
 
+//Call, bind and Apply
+
+var marks = [40,50,12,12,20];
+
+function arrCal (arr,fn){
+    var result = [];
+    for (var i =0; i<arr.length; i++){
+        result.push(fn(arr[i]));
+    }
+    return result;
+}
+
+/*
+function calResult(score){
+    if (score>15){
+        return "pass";
+    } else {
+        return "fail";
+    }
+}
+*/
 
 
 
 
+function calResult(limit,score){
+    if (score>limit){
+        return "pass";
+    } else {
+        return "fail";
+    }
+}
 
+//To use calResult if we want to use arrCal we have to first fix one argument 
+//That can be done using bind
+var mathResult = calResult.bind(this,15);
 
+//This shows that 15 is the limit for maths --- now mathResult function can be called with arrCal
 
+console.log(arrCal(marks,mathResult));
+
+var hindiResult = calResult.bind(this,12);
+console.log(arrCal(marks,hindiResult));
 
 
 
