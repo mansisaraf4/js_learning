@@ -198,6 +198,7 @@ function calResult(limit,score){
 
 //To use calResult if we want to use arrCal we have to first fix one argument 
 //That can be done using bind
+//this can be replaced with other object if we use function from other
 var mathResult = calResult.bind(this,15);
 
 //This shows that 15 is the limit for maths --- now mathResult function can be called with arrCal
