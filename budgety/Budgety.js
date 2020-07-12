@@ -1,0 +1,4 @@
+//Module
+var budgetController = (function(){
+
+})();

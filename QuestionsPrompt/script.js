@@ -64,7 +64,9 @@ function selectQuestion(arr,fn){
     for (var i=0;i<currentQues.choice.length;i++){
         console.log(currentQues.choice[i]);
     }
-    fn(prompt(currentQues.question),currentQues,arr);
+    var ans = prompt(currentQues.question);
+    console.log(ans);
+    fn(ans,currentQues,arr);
 
 }
 
