@@ -1,56 +1,36 @@
-//BUDGET CONTROLLER
-var budgetController = (function(){
-
-
-})();
-
-//UI CONTROLLER
-var uIController = (function(){
-    var DOMstrings = {
-        inputType: '.add__type',
-        inputDescription:'.add__description',
-        inputValue:'.add__value',
-        inputBtn:'.add__btn'
-    };
-
-    return {
-        getInput: function(){
-            return{
-                type: document.querySelector(DOMstrings.inputType).value,
-                description: document.querySelector(DOMstrings.inputDescription).value,
-                value: document.querySelector(DOMstrings.inputValue).value
-            }
-        },
-        getDomstrings: function(){
-            return DOMstrings;
-        }
+// Button to add items
+document.querySelector('.add__btn').addEventListener('click',function(){
+    addItem();
+});
+// On Keypress add items
+document.addEventListener('keypress',function(event){
+    if(event.key==="Enter"){
+        addItem();
     }
+})
 
-})();
+var addItem = function(){
+    var amount,currentIncome,currentExpense,updatedIncome,updatedExpense;
+    currentIncome = document.querySelector('.budget__income--value').textContent;
+    currentExpense = document.querySelector('.budget__expenses--value').textContent;
 
-//Interface between budget controller and UI Controller
-var controller = (function(budgetCtrl,UICtrl){
-    var DOM = UICtrl.getDomstrings();
-    var ctrlAddItem = function(){
-        // 1. Get Fields Input Data
-        var input = UICtrl.getInput();
-        console.log(input);
-
-        // 2. Add Item to budget Controller
-
-        // Add Item to UI
-
-        // Calculate the budget
-
-        // Display budget on screen
-
+    var record = getInput();
+    if(record.type==="inc" && record.value>0){
+        amount = parseFloat(currentIncome.split(" ")[1].split(",").join(""))+parseFloat(record.value);
+        document.querySelector('.budget__income--value').textContent = Intl.NumberFormat('en-IN').format(amount);
+    } else if(record.type==="inc" && record.value>0){
+        amount = parseFloat(currentIncome.split(" ")[1].split(",").join(""))-parseFloat(record.value);
+        document.querySelector('.budget__expenses--value').textContent = Intl.NumberFormat('en-IN').format(amount);
     }
-    
-    document.querySelector(DOM.inputBtn).addEventListener('click',ctrlAddItem)
-    document.addEventListener('keypress',function(event){
-        if (event.key==="Enter"){
-            ctrlAddItem();
-        }
-    })
+    //Code to add items in the list
+    // Update the amounts
+}
 
-})(budgetController,uIController);
+var getInput = function(){    
+    var inputData = {
+        type: document.querySelector('.add__type').value,
+        description:document.querySelector('.add__description').value,
+        value:document.querySelector('.add__value').value
+    }
+    return inputData;
+}
