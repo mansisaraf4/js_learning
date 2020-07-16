@@ -25,6 +25,7 @@ var addItem = function(){
         totalExpense = totalExpense+parseFloat(record.value);
         document.querySelector('.budget__expenses--value').textContent = "- "+ Intl.NumberFormat().format(totalExpense);
     }
+    createRecord(record);
     calcBudgetAndExpensePercent(totalIncome,totalExpense);
 
     //Code to add items in the list
@@ -44,4 +45,28 @@ var getInput = function(){
         value:document.querySelector('.add__value').value
     }
     return inputData;
+}
+
+var createRecord = function(record){
+    var classSelector; 
+    record.type === "inc" ? classSelector = ".income__list": classSelector = ".expenses__list";
+    // main div
+    var container = document.createElement("div");
+    container.classList.add("item");
+    container.classList.add("clearfix");
+    // Item Description
+    var itemDescription = document.createElement("div");
+    itemDescription.classList.add(".item__description");
+    // Right Div 
+    var right = document.createElement("div");
+    right.classList.add(".right");
+    right.classList.add("clearfix");
+    // ItemValue
+    var itemValue = document.createElement("div");
+    itemValue.classList.add(".item__value");
+    
+    container.appendChild(itemDescription);
+    var t = document.createTextNode(record.description);
+    itemDescription.appendChild(t);
+    document.querySelector(classSelector).appendChild(container);
 }
