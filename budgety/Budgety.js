@@ -1,10 +1,18 @@
-var totalIncome, totalExpense,currentIncome,currentExpense;
+var totalIncome, totalExpense,currentIncome,currentExpense, count, incomeCookieString, expenseCookieString;
 currentIncome = document.querySelector('.budget__income--value').textContent;
 currentExpense = document.querySelector('.budget__expenses--value').textContent;
 totalIncome = parseFloat(currentIncome.split(" ")[1].split(",").join(""));
 totalExpense = parseFloat(currentExpense.split(" ")[1].split(",").join(""));
+count = 0;
 
+var init = function(){
+    var incomeCookie = getCookie("total_income");
+    var expenseCookie = getCookie("total_expenses");
+    if(incomeCookie !== "") {
+        // get cookie and initialize variables
+    }
 
+}
 // Button to add items
 document.querySelector('.add__btn').addEventListener('click',function(){
     addItem();
@@ -20,14 +28,21 @@ var addItem = function(){
     var record = getInput();
     if(record.type==="inc" && record.value>0){
         totalIncome = totalIncome+parseFloat(record.value);
+        setCookie("total_income",totalIncome);
+        incomeCookieString = incomeCookieString + "," + record;
+        console.log(incomeCookieString);
+        setCookie("income_array",incomeCookieString);
         document.querySelector('.budget__income--value').textContent = "+ "+Intl.NumberFormat().format(totalIncome);
     } else if(record.type==="exp" && record.value>0){
         totalExpense = totalExpense+parseFloat(record.value);
+        setCookie("total_expenses",totalExpense);
+        expenseCookieString = expenseCookieString + "," + record;
+        console.log(expenseCookieString);
+        setCookie("expenses_array",expenseCookieString)
         document.querySelector('.budget__expenses--value').textContent = "- "+ Intl.NumberFormat().format(totalExpense);
     }
-    createRecord(record);
+    addRecord(record);
     calcBudgetAndExpensePercent(totalIncome,totalExpense);
-
     //Code to add items in the list
     // Update the amounts
 }
@@ -46,7 +61,8 @@ var getInput = function(){
     }
     return inputData;
 }
-
+/*
+// Add a record using appendChild
 var createRecord = function(record){
     var classSelector; 
     record.type === "inc" ? classSelector = ".income__list": classSelector = ".expenses__list";
@@ -64,9 +80,77 @@ var createRecord = function(record){
     // ItemValue
     var itemValue = document.createElement("div");
     itemValue.classList.add(".item__value");
-    
+
     container.appendChild(itemDescription);
     var t = document.createTextNode(record.description);
     itemDescription.appendChild(t);
     document.querySelector(classSelector).appendChild(container);
+
 }
+*/
+
+var setCookie = function(name,value){
+    document.cookie = name + "=" + value + ";" + ";path=/";
+    console.log("Set Cookie called");
+    console.log(document.cookie);
+}
+
+var getCookie = function(cookieName){
+    var name = cookieName + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+}
+
+var checkCookie = function(){
+    var totalInc = getCookie("total_income");
+    var totalExp = getCookie("total_expense");
+    var incArray = getCookie("income_array");
+    var expArray = getCookie("expenses_array");
+}
+
+var addRecord = function(record){
+    var classSelector, HTMLSelector,expensHTMLStructure, incomeHTMLStructure, expensHTMLStructure; 
+    record.type === "inc" ? classSelector = ".income__list": classSelector = ".expenses__list";    
+    var expensHTMLStructure = `
+    <div class="item clearfix" id="expense-" + ${count}>
+        <div class="item__description">${record.description}</div>
+        <div class="right clearfix">
+            <div class="item__value">- ${record.value}</div>
+            <div class="item__percentage">21%</div>
+            <div class="item__delete">
+                <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>
+            </div>
+        </div>
+    </div>
+    `
+    var incomeHTMLStructure = `
+    <div class="item clearfix" id="income-"++ ${count}>
+        <div class="item__description">${record.description}</div>
+        <div class="right clearfix">
+            <div class="item__value">+ ${record.value}</div>
+            <div class="item__delete">
+                <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>
+            </div>
+        </div>
+    </div>
+    `
+    record.type === "inc" ? HTMLSelector = incomeHTMLStructure: HTMLSelector = expensHTMLStructure;
+    var div = document.querySelector(classSelector);
+    div.innerHTML = div.innerHTML + HTMLSelector;
+    count+=1;
+    getCookie("income");
+}
+// Functionality for delete button
+document.querySelector('.item__delete--btn').addEventListener('click',function(){
+    // Delete a row
+});
