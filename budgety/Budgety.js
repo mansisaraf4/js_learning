@@ -1,15 +1,49 @@
 var totalIncome, totalExpense,currentIncome,currentExpense, count, incomeCookieString, expenseCookieString;
-currentIncome = document.querySelector('.budget__income--value').textContent;
-currentExpense = document.querySelector('.budget__expenses--value').textContent;
-totalIncome = parseFloat(currentIncome.split(" ")[1].split(",").join(""));
-totalExpense = parseFloat(currentExpense.split(" ")[1].split(",").join(""));
+// incomeCookieString = "";
+// currentIncome = document.querySelector('.budget__income--value').textContent;
+// currentExpense = document.querySelector('.budget__expenses--value').textContent;
+// totalIncome = parseFloat(currentIncome.split(" ")[1].split(",").join(""));
+// totalExpense = parseFloat(currentExpense.split(" ")[1].split(",").join(""));
+
+// totalIncome = getCookie("total_income");
+// totalExpense = getCookie("total_expense");
 count = 0;
+
+// setCookie("total_income",totalIncome);
+// setCookie("total_expenses",totalExpense);
 
 var init = function(){
     var incomeCookie = getCookie("total_income");
     var expenseCookie = getCookie("total_expenses");
-    if(incomeCookie !== "") {
-        // get cookie and initialize variables
+    console.log("incomeCookie -" + incomeCookie);
+    console.log("expensCookie -" + expenseCookie);
+    if(incomeCookie > 0) {
+        totalIncome = incomeCookie;
+        console.log("income cookie > 0");
+        document.querySelector('.budget__income--value').textContent = "+ "+Intl.NumberFormat().format(totalIncome);
+    } else {
+        totalIncome = 0.00;
+    }
+    if(expenseCookie > 0){
+        totalExpense = expenseCookie;
+        console.log("expense cookie > 0");
+        document.querySelector('.budget__expenses--value').textContent = "- "+ Intl.NumberFormat().format(totalExpense);
+    } else {
+        totalExpense = 0.00;
+    }
+    var incomeStringArray = getCookie("income_array").split("-");
+    if (incomeStringArray !== ""){
+        // display the income list
+        console.log("incomeArray" + incomeStringArray);
+        for(var i = 0; i<incomeStringArray.length ; i++){
+            // addRecord();
+            console.log("try to print objects:" + incomeStringArray[i]);
+        }
+    }
+    var expenseStringArray = getCookie("expenses_array").split("-");
+    if (expenseStringArray !== ""){
+        // display the expense list
+        console.log("expenseArray" + expenseStringArray);
     }
 
 }
@@ -27,22 +61,35 @@ document.addEventListener('keypress',function(event){
 var addItem = function(){
     var record = getInput();
     if(record.type==="inc" && record.value>0){
-        totalIncome = totalIncome+parseFloat(record.value);
+        totalIncome = totalIncome + parseFloat(record.value);
+        console.log("From addItem_ total Income = " + totalIncome );
         setCookie("total_income",totalIncome);
-        incomeCookieString = incomeCookieString + "," + record;
-        console.log(incomeCookieString);
+        if(incomeCookieString !== undefined) {
+            incomeCookieString = incomeCookieString + "-" + record;
+        }else {
+            incomeCookieString = record;
+        }
+        console.log("IncomeCookieString" + incomeCookieString);
         setCookie("income_array",incomeCookieString);
         document.querySelector('.budget__income--value').textContent = "+ "+Intl.NumberFormat().format(totalIncome);
     } else if(record.type==="exp" && record.value>0){
         totalExpense = totalExpense+parseFloat(record.value);
         setCookie("total_expenses",totalExpense);
-        expenseCookieString = expenseCookieString + "," + record;
+        if(incomeCookieString !== undefined) {
+            expenseCookieString = expenseCookieString + "-" + record.description + ":" + record.value;
+        }else {
+            expenseCookieString = record.description + ":" + record.value;
+        }
         console.log(expenseCookieString);
         setCookie("expenses_array",expenseCookieString)
         document.querySelector('.budget__expenses--value').textContent = "- "+ Intl.NumberFormat().format(totalExpense);
     }
     addRecord(record);
     calcBudgetAndExpensePercent(totalIncome,totalExpense);
+    console.log("Total_Income" + getCookie("total_income"));
+    console.log("income_array" + getCookie("income_array"));
+    console.log("Total_Expense" + getCookie("total_expenses"));
+    console.log("expense_total" + getCookie("expenses_array"));
     //Code to add items in the list
     // Update the amounts
 }
@@ -61,6 +108,8 @@ var getInput = function(){
     }
     return inputData;
 }
+
+
 /*
 // Add a record using appendChild
 var createRecord = function(record){
@@ -91,8 +140,8 @@ var createRecord = function(record){
 
 var setCookie = function(name,value){
     document.cookie = name + "=" + value + ";" + ";path=/";
-    console.log("Set Cookie called");
-    console.log(document.cookie);
+    // console.log("Set Cookie called");
+    // console.log(document.cookie);
 }
 
 var getCookie = function(cookieName){
@@ -112,6 +161,7 @@ var getCookie = function(cookieName){
 }
 
 var checkCookie = function(){
+    init();
     var totalInc = getCookie("total_income");
     var totalExp = getCookie("total_expense");
     var incArray = getCookie("income_array");
@@ -148,7 +198,7 @@ var addRecord = function(record){
     var div = document.querySelector(classSelector);
     div.innerHTML = div.innerHTML + HTMLSelector;
     count+=1;
-    getCookie("income");
+    // getCookie("income");
 }
 // Functionality for delete button
 document.querySelector('.item__delete--btn').addEventListener('click',function(){
