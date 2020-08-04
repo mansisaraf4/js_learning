@@ -58,7 +58,9 @@ var budgetController = (function() {
                 return current.id;
             });
             index =  ids.indexOf(id);
-
+            if (index !== -1){
+                data.allItems[type].splice(index,1);
+            }
         },
         calculateBudget: function(){
         // Calculate total income & expense
@@ -74,6 +76,9 @@ var budgetController = (function() {
             } else {
                 data.percentage = -1;
             }
+        },
+        calculatePercentage: function(){
+
         },
         getBudget: function(){
             return {
@@ -135,6 +140,10 @@ var UIController = (function() {
             // Using InsertAdjacentHTML function
             document.querySelector(element).insertAdjacentHTML('beforeend',newHtml);
         },
+        deleteListItem : function(selectorID){
+            var el = document.getElementById(selectorID);
+            el.parentNode.removeChild(el);
+        },
         displayBudget : function(obj){
             document.querySelector(DOMStrings.budgetLabel).textContent = obj.budget;
             document.querySelector(DOMStrings.incomeLabel).textContent = obj.totalInc;
@@ -189,6 +198,15 @@ var controller = (function(budgetCtrl,UICtrl){
 
     }
 
+    var updatePercentages = function(){
+        // Calculate percentage
+
+        // Read from budget ctr
+
+        // update UI
+
+    }
+
     var ctrlAddItem = function() {
         var input, newItem;
         // 1. Get the field input data
@@ -203,6 +221,8 @@ var controller = (function(budgetCtrl,UICtrl){
             UICtrl.clearFields();
             // 5. Calculate and Update budget
             updateBudget();
+            // 6. Calculate and update percentage
+            updatePercentages();
         }
     }
 
@@ -213,13 +233,15 @@ var controller = (function(budgetCtrl,UICtrl){
         if (itemID){
             splitID = itemID.split('-');
             type = splitID[0];
-            ID = splitID[1];
+            ID = parseInt(splitID[1]);
             // Remove the  obj from data
-
+            budgetCtrl.deleteItem(type,ID);
             // Remove the obj from UI
-
+            UICtrl.deleteListItem(itemID);
             // Update and show the new budget
-
+            updateBudget();
+            // Calculate and update percentage
+            updatePercentages();
         }
     }
     return{
