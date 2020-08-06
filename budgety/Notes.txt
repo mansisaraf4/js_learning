@@ -1,0 +1,4 @@
+Math.abs();
+num.toFixed(2) --- used on numbers to set decimal places
+str.split(',')  --- convert string into array dividing based on ','
+str.substr(0,1) --- start from index 0 and read one char
