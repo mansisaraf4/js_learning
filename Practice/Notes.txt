@@ -2,6 +2,10 @@ Math.abs();
 num.toFixed(2) --- used on numbers to set decimal places
 str.split(',')  --- convert string into array dividing based on ','
 str.substr(0,1) --- start from index 0 and read one char
+Math.abs();
+num.toFixed(2) --- used on numbers to set decimal places
+str.split(',')  --- convert string into array dividing based on ','
+str.substr(0,1) --- start from index 0 and read one char
 
 ES6
 newArrayName = Array.from(oldarrayname);
@@ -60,3 +64,7 @@ n.includes('an') = True
 n.repeat(3) = MansiMansiMansi
 
 `${n} `.repeat(3) = Mansi Mansi Mansi
+
+
+---Arguments is a special var we have access in all functions -which returns an object with all the arguments passed in the function
+

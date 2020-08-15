@@ -184,10 +184,7 @@ function calResult(score){
     }
 }
 */
-
-
-
-
+/*
 function calResult(limit,score){
     if (score>limit){
         return "pass";
@@ -207,9 +204,35 @@ console.log(arrCal(marks,mathResult));
 
 var hindiResult = calResult.bind(this,12);
 console.log(arrCal(marks,hindiResult));
+*/
+//ES6
+//Spread Operator
+/*var ages = [10,20,30,40];
+function addFourAges(a, b, c,d) {
+    return a+b+c+d;
+}
+var sum = addFourAges(...ages);
+console.log(sum);
+
+//String Functions
+let name = "Mansi Saraf";
+const dob = 1995;
+function calAge(year){
+    return 2020-year;
+}
+let age = calAge(dob);
+console.log(`${name} is of age ${age}. She was born in ${dob}`);
+
+const familySmith = ["Jane","Jake"];
+const familyMiller = ["ABC","JKL"];
+const familyCombined = [...familySmith,...familyMiller];
+console.log(familyCombined);
+console.log(familySmith);*/
 
 
-
+/////////////////////////////////////////////
+//Rest Parameters 
+// Receive a couple of single values and return array 
 
 
 
