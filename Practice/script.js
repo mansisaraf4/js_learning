@@ -233,6 +233,7 @@ console.log(familySmith);*/
 /////////////////////////////////////////////
 //Rest Parameters 
 // Receive a couple of single values and return array 
+//stores input params as array
 
 
 
