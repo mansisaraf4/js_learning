@@ -1,0 +1,15 @@
+Math.abs();
+num.toFixed(2) --- used on numbers to set decimal places
+str.split(',')  --- convert string into array dividing based on ','
+str.substr(0,1) --- start from index 0 and read one char
+
+ES6 vs ES5
+Let - Used to declare a variable //Can update value
+Const = Used to declare a constant
+Let and const are block scoped unlike var which is function scope
+ES5
+If we use var before it is defined it printed undefined
+ES6
+If we print a let before it is defined it gives error
+In ES6 IIFE can directly be made as the vars are block  scoped
+In ES6 we can use template literal using back ticks "`"
