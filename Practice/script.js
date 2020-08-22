@@ -165,15 +165,15 @@ ingredientsRequired("Momos")("Mansi");
 
 //Call, bind and Apply
 
-var marks = [40,50,12,12,20];
+// var marks = [40,50,12,12,20];
 
-function arrCal (arr,fn){
-    var result = [];
-    for (var i =0; i<arr.length; i++){
-        result.push(fn(arr[i]));
-    }
-    return result;
-}
+// function arrCal (arr,fn){
+//     var result = [];
+//     for (var i =0; i<arr.length; i++){
+//         result.push(fn(arr[i]));
+//     }
+//     return result;
+// }
 
 /*
 function calResult(score){
@@ -234,6 +234,9 @@ console.log(familySmith);*/
 //Rest Parameters 
 // Receive a couple of single values and return array 
 //stores input params as array
+
+///API andAJAX
+
 
 
 

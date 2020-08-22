@@ -28,7 +28,9 @@ class Element{
         this.buildYear = buildYear;
     }
 }
-//Park Class and functions
+/*
+! Park Class and functions
+*/
 class Park extends Element{
     constructor(name, buildYear, treeCount, parkArea){
         super(name,buildYear);
@@ -66,16 +68,17 @@ var calcAvgAge =  function (parkArray){
 //Display Park Details
 var displayParksDetails = function(parkArray){
     console.log('================PARKS================');
-    for (let park of parkArray){
-        park.calcDensity();
-    }
+    parkArray.forEach(el => {
+        el.calcDensity();
+    });
+    // for (let park of parkArray){
+    //     park.calcDensity();
+    // }
     calcAvgAge(parkArray);
     isMoreThan1000(parkArray);
 }
-const parkA = new Park('ParkA',1990,500,546);
-const parkB = new Park('ParkB',1800,800,1000);
-const parkC = new Park('ParkC',1700,1200,1000);
-let parkArr = [parkA, parkB, parkC];
+
+const parkArr = [new Park('ParkA',1990,500,546), new Park('ParkB',1800,800,1000), new Park('ParkC',1700,1200,1000)];
 displayParksDetails(parkArr);
 //Street Class and Functions
 class Street extends Element{
@@ -107,6 +110,7 @@ let displayStreetDetails= function(streetArr){
     calcTotalandAvgLength(streetArr);
     displaySize(streetArr);
 }
+
 const streetD = new Street('StreetD',1900,50,'tiny');
 let streetArray = [streetA, streetB, streetC, streetD];
 displayStreetDetails(streetArray);
