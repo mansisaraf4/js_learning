@@ -4,10 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Asynchronous JavaScript</title>
+    <link type="text/css" rel="stylesheet" href="styleWeather.css">
+    <title>Weather</title>
 </head>
-<body>
-    <h1>Asynchronous JavaScript</h1>
+<body onload="getLocation()">
+    <div class = "input">
+        <input type="text" placeholder="Enter City Name" class = "city-input">
+    </div>
+    <div class = "city-name" id = "city-id">City Name</div>
+    <div class = "details">
+        <div>
+        <span class = "label">Temperature - </span>
+        <span class = "values" id = "temp"></span>
+        </div>
+        <div>
+        <span class = "label">Humidity - </span>
+        <span class = "values" id = "humidity"></span>
+        </div>
+    </div>
     <script src="app.js"></script>
 </body>
 </html>
