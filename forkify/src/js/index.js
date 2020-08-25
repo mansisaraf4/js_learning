@@ -10,9 +10,9 @@ import {elements} from './views/base';
 */ 
 const state = {};
 const controlSearch = async () => {
-    // Get Query from View
+    // 1. Get Query from View
     const query = searchView.getInput(); //TODO
-    console.log(`${query} is the query`);
+    // console.log(`${query} is the query`);
     if(query) {
         // 2. new Search Object and add to state
         state.search = new Search(query);
