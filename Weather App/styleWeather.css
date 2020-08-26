@@ -1,15 +1,33 @@
-.city-name{
-  font-weight: bold;
-  color: #393B79;
-  font-size: 48px;
-  margin:auto;
+body {
+  background-color: #393B79;
+  height: -webkit-fill-available;
+  color: #ffffff;
+}
+div {
   width:50%;
+  height:100px;
   padding:10px;
   text-align : center;
+	/* position: absolute; */
+	top:0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
 }
-.details {
-  background-color: #393B79;
-  color: #ffffff;
+.city-name{
+  font-weight: bold;
+  font-size: 78px;
+  /* width:50%;
+  height:100px;
+  padding:10px;
+  text-align : center;
+	position: absolute;
+	top:0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto; */
 }
 .label {
     font-size: 24px;
@@ -17,3 +35,6 @@
 .values {
     font-size: 30px;
 }
+/* @font-face {
+   src: url("https://www.1001freefonts.com/montserrat.font");
+} */

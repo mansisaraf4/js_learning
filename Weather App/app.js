@@ -1,64 +1,97 @@
-function getWeather(woeid) {
-    fetch(`https://cors-anywhere.herokuapp.com/https://www.metaweather.com/api/location/${woeid}/`)
-    .then(result => {
-        // console.log(result);
-        return result.json();
-    })
-    .then(data => {
-        // console.log(data);
-        const today = data.consolidated_weather[0];
-        // document.querySelector('.temperature').textContent = `${today.the_temp} °C`;
-        // document.querySelector('.humidity').textContent = `${today.humidity} g.kg-1`;
-        document.getElementById('temp').textContent = `${today.the_temp} °C`;
-        document.getElementById('humidity').textContent = `${today.humidity} g.kg-1`;
-        console.log(`Humidity today in ${data.title} is ${today.humidity} g.kg-1`);
-        console.log(`Temperature today in ${data.title} is ${today.the_temp} degree Centigrade.`);
-    })
-    .catch(error => console.log(error));
-}
-// https://www.metaweather.com/api/location/search/?query=ahmedabad
-
-async function getWoeid(city) {
-    try {
-        const result = await fetch(`https://cors-anywhere.herokuapp.com/https://www.metaweather.com/api/location/search/?query=${city}`);
-        const data = await result.json().
-        then(data => {
-            for (const city of data) {
-            if(city.title.toUpperCase() == userInput.toUpperCase()) {
-                return (city.woeid);
-            }
-        }  
-    }).then(woeid => {
-        getWeather(woeid); 
-    })
-    .catch(error => console.log(error));
-    } catch(error) {
-        alert(error);
-    }
-}
-
+//Get location ---- called onLoad event
 function getLocation() {
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
+    navigator.geolocation.getCurrentPosition(showPosition, showError);
   } else { 
-    x.innerHTML = "Geolocation is not supported by this browser.";
+    console.log("Geolocation is not supported by this browser.");
   }
 }
 
 function showPosition(position) {
   console.log("Latitude: " + position.coords.latitude + 
   "Longitude: " + position.coords.longitude);
+  lat = position.coords.latitude;
+  long = position.coords.longitude;
+  getWeatherDetails(lat,long);
 }
 
-// if(userInput){
-//     getWoeid(userInput);
-// }
-var userInput;
-document.addEventListener('keypress',function(event){
-    if(event.key === "Enter"){
-        userInput = document.querySelector('.city-input').value;
-        document.querySelector('.city-name').textContent = userInput;
-        getWoeid(userInput);
-        // getLocation();
+function showError(error){
+    switch(error.code) {
+    case error.PERMISSION_DENIED:
+      console.log("User denied the request for Geolocation.");
+      getWeatherDetails(25.67,76.69);
+      break;
+    case error.POSITION_UNAVAILABLE:
+      console.log("Location information is unavailable.");;
+      break;
+    case error.TIMEOUT:
+      console.log("The request to get user location timed out.");
+      break;
+    case error.UNKNOWN_ERROR:
+      console.log("An unknown error occurred.");;
+      break;
+  }
+}
+
+//Get Weather details from API using the coordinates from getLocation()
+async function getWeatherDetails(lat,long){
+    try{
+        const result = await fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${appID}`);
+        const data = await result.json().
+        then(data => {
+            // console.log(data);
+            return data;
+        }).
+        then(data => readWeatherDetails(data)
+        ).
+        catch(error => console.log(error));
+    }catch (error){
+        alert(error);
     }
-});
+}
+
+function readWeatherDetails(data){
+    console.log(data);
+    details = {
+        name: data.name,
+        humidity: data.main.humidity,
+        temp: kelvinToCelsius(data.main.temp).toFixed(2)
+    };
+    document.getElementById('temp').textContent = `${details.temp} °C`;
+    document.getElementById('humidity').textContent = `${details.humidity} g.kg-1`;
+    document.querySelector('.city-name').textContent = `${data.name}`;     
+}
+function kelvinToCelsius(tempInKelvin){
+    return (parseFloat(tempInKelvin) - 273.15);
+}
+
+let userInput, lat, long,details;
+const appID = 'b89f3eed28c90e5170d2cfbb3337d6cd';
+// http://api.openweathermap.org/data/2.5/weather?lat=25.6728&lon=76.6931&appid=b89f3eed28c90e5170d2cfbb3337d6cd
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
