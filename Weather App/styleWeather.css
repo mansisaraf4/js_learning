@@ -2,19 +2,13 @@
   font-family: myFirstFont;
   src: url(Montserrat-Regular.ttf);
 }
-
-/* div {
-  font-family: myFirstFont;
-} */
 body {
   font-family: myFirstFont;
   background-color: #393B79;
   height: -webkit-fill-available;
   color: #ffffff;
   display: grid;
-  grid-template-rows: 50% auto auto;
-  justify-content: center;
-  /* align-content: end; */
+  align-content: center;
 }
 div {
   padding:10px;
@@ -23,12 +17,13 @@ div {
 .city-name{
   font-weight: bold;
   font-size: 78px;
-  /* align-self: end; */
 }
-/* grid ----- display grid --- align content center */
 .label {
     font-size: 24px;
 }
 .values {
     font-size: 30px;
+}
+.details{
+    text-align:center;
 }
