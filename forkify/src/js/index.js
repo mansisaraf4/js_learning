@@ -1,6 +1,7 @@
 // https://forkify-api.herokuapp.com/api/search?q=pizza
 import Search from './models/Search';
 import * as searchView from './views/searchView';
+import * as recipeView from './views/recipeView';
 import { elements, renderLoader, clearLoader } from './views/base';
 import Recipe from './models/Recipe';
 /* Global state of the app
@@ -14,7 +15,6 @@ const state = {};
 const controlSearch = async() => {
     // 1. Get Query from View
     const query = searchView.getInput(); //TODO
-    // console.log(`${query} is the query`);
     if (query) {
         // 2. new Search Object and add to state
         state.search = new Search(query);
@@ -26,7 +26,6 @@ const controlSearch = async() => {
         try {
             await state.search.getResults();
             searchView.renderResults(state.search.result);
-            console.log(state.search.result);
         } catch (err) {
             alert('Something went wrong with the search!');
         }
@@ -50,27 +49,44 @@ elements.searchResPages.addEventListener('click', (e) => {
 const controlRecipe = async() => {
     //Get id from url
     const id = window.location.hash.replace('#', '');
-    console.log(id);
     if (id) {
+        //highlight selected
+        if (state.search) {
+            searchView.highlightedSelected(id);
+        }
         //Prepare UI for changes
-
+        recipeView.clearRecipe();
+        renderLoader(elements.recipe);
         //Create new Recipe object
         state.recipe = new Recipe(id);
         //Get recipe data
         try {
             await state.recipe.getRecipe();
-            console.log(state.recipe.ingredients);
             state.recipe.parseIngredients();
-            console.log("After parse");
-            console.log(state.recipe.ingredients);
             //Get servings and time
             state.recipe.calcServings();
             state.recipe.calcTime();
             //Render recipe
-            console.log(state.recipe);
+            clearLoader();
+            recipeView.renderRecipe(state.recipe);
         } catch (error) {
             alert('error processing recipe');
         }
     }
 };
-['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));
+['hashchange', 'load'].forEach((event) => window.addEventListener(event, controlRecipe));
+
+//Handling recipe button clicks
+elements.recipe.addEventListener('click', (e) => {
+    if (e.target.matches('.btn-decrease, .btn-decrease *')) {
+        //Decrease btn is clicked
+        if (state.recipe.servings > 1) {
+            state.recipe.updateServing('dec');
+            recipeView.updateServingsIngredients(state.recipe);
+        }
+    } else if (e.target.matches('.btn-increase , .btn-increase *')) {
+        //increase btn is clicked
+        state.recipe.updateServing('inc');
+        recipeView.updateServingsIngredients(state.recipe);
+    }
+});
