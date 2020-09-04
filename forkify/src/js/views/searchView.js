@@ -12,7 +12,13 @@ export const highlightedSelected = (id) => {
     resArray.forEach((element) => {
         element.classList.remove('results__link--active');
     });
-    document.querySelector(`.results__link[href="#${id}"]`).classList.add('results__link--active');
+    console.log(id);
+    try {
+        document.querySelector(`.results__link[href="#${id}"]`).classList.add('results__link--active');
+    } catch (error) {
+        console.log(error);
+    }
+
 };
 export const limitRecipeTitle = (title, limit = 17) => {
     const newTitle = [];
